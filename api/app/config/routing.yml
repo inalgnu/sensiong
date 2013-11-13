@@ -1,0 +1,5 @@
+sensiong_api:
+    resource: "@SensiongApiBundle/Controller/"
+    type: annotation
+    prefix: /
+

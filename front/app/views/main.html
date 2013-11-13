@@ -1,0 +1,36 @@
+<div class="row">
+    <panel size="6">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="player in players">
+                    <td>{{player.name}}</td>
+                    <td>{{player.score}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </panel>
+    <panel title="Ajouter un score simple">
+        <select-winner></select-winner>
+        <select-looser></select-looser>
+        <accept-terms></accept-terms>
+        <submit-score></submit-score>
+    </panel>
+    <panel title="Rejoindre Sensiong">
+        <div>
+            <label>Votre pseudo</label>
+            <input type="text" ng-model="player.name">
+        </div>
+        <div class="pull-right">
+            <input type="submit" value="Join" class="btn btn-sm btn-success" ng-disabled="!player.name.length" ng-click="createNew(player)">
+        </div>
+    </panel>
+</div>
+
