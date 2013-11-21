@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,7 +23,7 @@ class PlayerController extends Controller
     {
         $players = $this->getDoctrine()->getManager()->getRepository('Sensiong\Bundle\ApiBundle\Entity\Player')->findAll();
 
-        return new Response($this->get('serializer')->serialize($players,'json'), 200, array('content-type' => 'application/json'));
+        return new JsonResponse($this->get('serializer')->serialize($players,'json'));
     }
 
     /**
@@ -31,7 +32,7 @@ class PlayerController extends Controller
      */
     public function getAction(Player $player)
     {
-        return new Response($this->get('serializer')->serialize($player,'json'), 200, array('content-type' => 'application/json'));
+        return new JsonResponse($this->get('serializer')->serialize($player,'json'));
     }
 
     /**
