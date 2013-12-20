@@ -4,66 +4,65 @@ namespace Sensiong\Bundle\ApiBundle\Controller;
 
 use Sensiong\Bundle\ApiBundle\Entity\Player;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
- * @Route("/players")
+ * @Config\Route("/players")
  */
 class PlayerController extends Controller
 {
     /**
-     * @Route("")
-     * @Method("GET")
+     * @Config\Route("")
+     * @Config\Method("GET")
+     * @Rest\View()
      */
     public function indexAction()
     {
-        $players = $this->getDoctrine()->getManager()->getRepository('Sensiong\Bundle\ApiBundle\Entity\Player')->findAll();
-
-        return new Response($this->get('serializer')->serialize($players,'json'), 200, array('content-type' => 'application/json'));
+        return $this->get('sensiong.repository.player')->findAll();
     }
 
     /**
-     * @Route("/{id}")
-     * @Method("GET")
+     * @Config\Route("/{id}")
+     * @Config\Method("GET")
+     * @Rest\View()
      */
     public function getAction(Player $player)
     {
-        return new Response($this->get('serializer')->serialize($player,'json'), 200, array('content-type' => 'application/json'));
+        return $player;
     }
 
     /**
-     * @Route("")
-     * @Method("POST")
+     * @Config\Route("")
+     * @Config\Method("POST")
+     * @Config\ParamConverter("requestPlayer", converter="fos_rest.request_body")
+     * @Rest\View(statusCode=201)
      */
-    public function newAction(Request $request)
+    public function newAction(Player $requestPlayer)
     {
-        /** @var $content \Sensiong\Bundle\ApiBundle\Entity\Player */
-        $content = $this->get('serializer')->deserialize($request->getContent(), 'Sensiong\Bundle\ApiBundle\Entity\Player','json');
+        $player = new Player($requestPlayer->getName());
 
-        $player = new Player($content->getName());
-        $this->getDoctrine()->getManager()->persist($player);
-        $this->getDoctrine()->getManager()->flush($player);
+        $this->save($player);
 
-        return new Response(null, 201);
+        return $player;
     }
 
     /**
-     * @Route("/{id}")
-     * @Method("PUT")
+     * @Config\Route("/{id}", requirements={"id"="\d+"})
+     * @Config\Method("PUT")
+     * @Config\ParamConverter("requestPlayer", converter="fos_rest.request_body")
+     * @Rest\View(statusCode=204)
      */
-    public function updateAction(Player $player, Request $request)
+    public function updateAction(Player $player, Player $requestPlayer)
     {
-        /** @var $player \Sensiong\Bundle\ApiBundle\Entity\Player */
-        $content = $this->get('serializer')->deserialize($request->getContent(), 'Sensiong\Bundle\ApiBundle\Entity\Player','json');
+        $player->updateFrom($requestPlayer);
 
-        $player->setScore($content->getScore());
+        $this->save($player);
+    }
 
+    public function save(Player $player)
+    {
         $this->getDoctrine()->getManager()->persist($player);
         $this->getDoctrine()->getManager()->flush($player);
-
-        return new Response(null, 204);
     }
 }

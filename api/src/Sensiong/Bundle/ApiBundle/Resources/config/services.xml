@@ -5,11 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="sensiong_api.fixtures.player.class">Sensiong\Bundle\ApiBundle\Fixtures\Player</parameter>
+        <parameter key="sensiong.fixtures.player.class">Sensiong\Bundle\ApiBundle\Fixtures\Player</parameter>
     </parameters>
 
     <services>
-        <service id="sensiong_api.fixtures.player" class="%sensiong_api.fixtures.player.class%">
+        <service id="sensiong.fixtures.player" class="%sensiong.fixtures.player.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
     </services>

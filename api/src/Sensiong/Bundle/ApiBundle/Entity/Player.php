@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Contract
+ * Player
  *
  * @ORM\Table("player")
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class Player
 {
@@ -46,11 +46,14 @@ class Player
         return $this;
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
+    public function updateFrom(Player $player)
+    {
+        $this->name = $player->name;
+        $this->score= $player->score;
+
+        return $this;
+    }
+
     public function getId()
     {
         return $this->id;

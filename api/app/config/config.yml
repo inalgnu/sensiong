@@ -65,7 +65,6 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
 
-
 nelmio_cors:
     paths:
         '^/':
@@ -73,3 +72,20 @@ nelmio_cors:
             allow_headers: ['X-Custom-Auth', 'content-type']
             allow_methods: ['OPTIONS', 'POST', 'PUT', 'GET', 'DELETE']
             max_age: 3600
+
+sensio_framework_extra:
+    router:  { annotations: true }
+    request: { converters: true }
+    view:    { annotations: false }  # More info at https://github.com/FriendsOfSymfony/FOSRestBundle/issues/95
+    cache:   { annotations: true }
+
+fos_rest:
+    body_converter:
+        enabled: true
+        validate: true
+        validation_errors_argument: validationErrors
+    format_listener:
+        rules:
+            - { path: ^/, priorities: [json], fallback_format: false, prefer_extension: true }
+    view:
+        view_response_listener: 'force'

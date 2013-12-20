@@ -15,6 +15,7 @@ angular.module('frontApp', [
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
+
 angular.module('frontApp')
     .factory('Player', function ($resource) {
         return $resource('http://sensiong.local/app_dev.php/players/:id', { id:'@id' }, {

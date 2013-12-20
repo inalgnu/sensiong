@@ -3,27 +3,24 @@
 angular.module('frontApp').controller('MainCtrl', function ($scope, Player) {
     $scope.players = Player.query();
 
-    $scope.saveScore = function(winner, looser) {
-        if (angular.isObject(winner) && angular.isObject(looser)) {
-            if (winner == looser) {
-                console.log(alert('Arrêtes de jouer seul, serieux !'));
-            }
-
-            winner.score += 10;
-            looser.score -= 20;
-
-            Player.update(winner);
-            Player.update(looser);
+    $scope.updateScore = function(player, score) {
+        if (angular.isObject(player)) {
+            player.score += score;
+            Player.update(player);
         }
     };
 
-    $scope.createNew = function(player) {
-        var p = angular.copy(player);
-        p.score = 1000;
-        
-        $scope.players.push(p);
+    $scope.saveScore = function(winner, looser) {
+        $scope.updateScore(winner, 10);
+        $scope.updateScore(looser, -20);
+    };
 
-        Player.save(player);
-        player.name = '';
+    $scope.createNew = function(player) {
+        Player.save(player, function(data){
+            $scope.players.push(data);
+            player.name = '';
+        });
     };
 });
+
+

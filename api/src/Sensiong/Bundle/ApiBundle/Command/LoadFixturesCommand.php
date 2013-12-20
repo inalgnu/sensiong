@@ -15,6 +15,6 @@ class LoadFixturesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getContainer()->get('sensiong_api.fixtures.player')->load();
+        $this->getContainer()->get('sensiong.fixtures.player')->load();
     }
 }
