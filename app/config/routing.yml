@@ -1,0 +1,3 @@
+home:
+    path : /
+    defaults: { _controller: FrameworkBundle:Template:template, template: ::base.html.twig }
