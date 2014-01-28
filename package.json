@@ -1,0 +1,8 @@
+{
+  "name": "sensiong",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "grunt": "~0.4.2"
+  }
+}
