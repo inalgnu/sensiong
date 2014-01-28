@@ -67,3 +67,20 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sensio_framework_extra:
+    router:  { annotations: true }
+    request: { converters: true }
+    view:    { annotations: false }
+    cache:   { annotations: true }
+
+fos_rest:
+    body_converter:
+        enabled: true
+        validate: true
+        validation_errors_argument: validationErrors
+    format_listener:
+        rules:
+            - { path: ^/api/, priorities: [json], fallback_format: false, prefer_extension: true }
+    view:
+        view_response_listener: 'force'
