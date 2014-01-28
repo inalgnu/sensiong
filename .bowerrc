@@ -1,0 +1,4 @@
+{
+    "directory" : "web/public/vendor",
+    "json"      : "bower.json"
+}
